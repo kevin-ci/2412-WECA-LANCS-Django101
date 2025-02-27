@@ -20,7 +20,10 @@ from main import views as main_views
 from articles import views as article_views
 
 urlpatterns = [
-    path('', main_views.home),
-    path('articles/<article_id>', article_views.view_article),
+    path('', main_views.home, name="homepage"),
+    path('articles/create', article_views.create_article, name="create_article"),
+    path('articles/<article_id>', article_views.view_article, name="view_article"),
+    path('articles/<article_id>/edit', article_views.edit_article, name="edit_article"),
+    path('articles/<article_id>/delete', article_views.delete_article, name="delete_article"),
     path('admin/', admin.site.urls),
 ]
