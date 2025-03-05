@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from django.contrib import messages
 from .models import Article
 from .forms import ArticleForm
+from django.contrib.auth.decorators import login_required
+from utils import superuser_required
 
 # Create your views here.
 def view_article(request, article_id):
@@ -13,6 +15,7 @@ def view_article(request, article_id):
 
     return render(request, 'article.html', context)
 
+@login_required
 def create_article(request):
     if request.method == 'POST':
         article_form = ArticleForm(request.POST)
@@ -30,7 +33,7 @@ def create_article(request):
         }
         return render(request, 'create_article.html', context)
     
-
+@superuser_required
 def edit_article(request, article_id):
     article = Article.objects.get(id=article_id)
 
@@ -50,6 +53,7 @@ def edit_article(request, article_id):
         }
         return render(request, 'create_article.html', context)
     
+@superuser_required
 def delete_article(request, article_id):
     if request.method == 'POST':
         article = Article.objects.get(id=article_id)
